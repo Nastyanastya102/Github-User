@@ -11,10 +11,10 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		F0AB4B9F2CDB34B20048E290 /* Exceptions for "Github-User" folder in "Github-User" target */ = {
+		F0AB4BD92CDF24E90048E290 /* Exceptions for "Github-User" folder in "Github-User" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Support/Info.plist,
+				Info.plist,
 			);
 			target = F0AB4B8C2CDB34AF0048E290 /* Github-User */;
 		};
@@ -24,7 +24,7 @@
 		F0AB4B8F2CDB34AF0048E290 /* Github-User */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				F0AB4B9F2CDB34B20048E290 /* Exceptions for "Github-User" folder in "Github-User" target */,
+				F0AB4BD92CDF24E90048E290 /* Exceptions for "Github-User" folder in "Github-User" target */,
 			);
 			path = "Github-User";
 			sourceTree = "<group>";
