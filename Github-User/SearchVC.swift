@@ -10,8 +10,11 @@ import UIKit
 class SearchVC: UIViewController {
     let logoImageView = UIImageView()
     let userNameTextFileld = GFTextField()
-    let searchButton = GFButton(backgroundColor: .green, title: "Get followers")
+    let searchButton = GFButton(backgroundColor: .systemGreen, title: "Get followers")
     let activityIndicator = UIActivityIndicatorView()
+    
+    
+    var isUserNameEntered: Bool {return !userNameTextFileld.text!.isEmpty}
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +23,7 @@ class SearchVC: UIViewController {
         configureLogoImageView()
         configureTextField()
         configureButton()
+        createDismissTapGesture()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,6 +47,7 @@ class SearchVC: UIViewController {
     
     func configureTextField() {
         view.addSubview(userNameTextFileld)
+        userNameTextFileld.delegate = self
         
         NSLayoutConstraint.activate([
             userNameTextFileld.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 48),
@@ -54,6 +59,7 @@ class SearchVC: UIViewController {
     
     func configureButton() {
         view.addSubview(searchButton)
+        searchButton.addTarget(self, action: #selector(pushFollowerList), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
             searchButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
@@ -62,5 +68,29 @@ class SearchVC: UIViewController {
             searchButton.heightAnchor.constraint(equalToConstant: 50),
             ])
        }
+    
+    func createDismissTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func pushFollowerList () {
+        
+        guard isUserNameEntered else {
+            return
+        }
+        let followerListVC = FollowersListVC()
+        followerListVC.userName = userNameTextFileld.text!
+        followerListVC.title = userNameTextFileld.text
+        navigationController?.pushViewController(followerListVC, animated: true)
+        userNameTextFileld.text = ""
+    }
 
+}
+
+extension SearchVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        pushFollowerList()
+        return true
+    }
 }
