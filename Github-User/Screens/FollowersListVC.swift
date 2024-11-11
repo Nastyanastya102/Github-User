@@ -5,13 +5,18 @@ class FollowersListVC: UIViewController {
     var userName: String = ""
     var followers: [Follower] = []
     let tableView = UITableView()
+    var collectionView: UICollectionView! = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        navigationController?.navigationBar.prefersLargeTitles = true
-        setupTableView()
+        configureViewController()
+        getFollowers()
+//        setupTableView()
 
+       
+    }
+    
+    func getFollowers() {
         NetworkManager.shared.followers(for: userName, page: 1) { [self] result in
             switch(result) {
             case .success(let flw):
@@ -37,6 +42,12 @@ class FollowersListVC: UIViewController {
                 }
             }
         }
+    }
+    
+    func configureViewController() {
+        view.backgroundColor = .systemBackground
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -81,4 +92,11 @@ extension FollowersListVC: UITableViewDelegate, UITableViewDataSource {
 
            tableView.register(GFFollowerCellTableViewCell.self, forCellReuseIdentifier: "GFFollowerCellTableViewCell")
        }
+    
+    func configureCollectionView() {
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UICollectionViewFlowLayout())
+        view.addSubview(collectionView)
+        collectionView.backgroundColor = .white
+        collectionView.register(GFFollowerCell.self, forCellWithReuseIdentifier: GFFollowerCell.identifier)
+    }
 }
