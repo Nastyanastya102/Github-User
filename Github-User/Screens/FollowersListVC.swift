@@ -5,8 +5,7 @@ class FollowersListVC: UIViewController {
     var userName: String = ""
     var followers: [Follower] = []
     let tableView = UITableView()
-    let items = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -52,16 +51,18 @@ extension FollowersListVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "GFFollowerCellTableViewCell", for: indexPath) as? GFFollowerCellTableViewCell else {
+                   return UITableViewCell()
+               }
+        cell.configure(with:followers[indexPath.row].avatarUrl, text: followers[indexPath.row].login)
         cell.selectionStyle = .none
-        cell.textLabel?.text = followers[indexPath.row].login
         return cell
     }
     
     // MARK: - UITableViewDelegate
 
       func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-          print("Selected item: \(items[indexPath.row])")
+          print("Selected item: \(followers[indexPath.row])")
       }
     
     func setupTableView() {
@@ -78,6 +79,6 @@ extension FollowersListVC: UITableViewDelegate, UITableViewDataSource {
            tableView.delegate = self
            tableView.dataSource = self
 
-           tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+           tableView.register(GFFollowerCellTableViewCell.self, forCellReuseIdentifier: "GFFollowerCellTableViewCell")
        }
 }
