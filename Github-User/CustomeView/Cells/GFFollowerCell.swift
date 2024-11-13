@@ -24,8 +24,8 @@ class GFFollowerCell: UICollectionViewCell {
     }
     
     func set(follower: Follower) {
+        avatar.downloadImage(from: follower.avatarUrl)
         nameLabel.text = follower.login
-        
     }
     
     private func setupSubviews() {
@@ -40,10 +40,10 @@ class GFFollowerCell: UICollectionViewCell {
             avatar.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
             avatar.heightAnchor.constraint(equalTo: avatar.widthAnchor),
             
-            nameLabel.heightAnchor.constraint(equalToConstant: 20),
             nameLabel.topAnchor.constraint(equalTo: avatar.bottomAnchor, constant: 12),
-            nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: padding),
-            nameLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -padding)
+            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
+            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
+            nameLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
 }

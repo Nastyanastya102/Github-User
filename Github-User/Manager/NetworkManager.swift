@@ -5,7 +5,7 @@
 //  Created by Nastya Klyashtorna on 2024-11-08.
 //
 
-import Foundation
+import UIKit
 
 enum NetworkError: Error {
     case overflow
@@ -16,12 +16,11 @@ enum NetworkError: Error {
 }
 
 class NetworkManager {
-    enum Endpoint {
-        case users, followers
-    }
+    enum Endpoint {case users, followers }
     
     static let shared = NetworkManager()
-    let baseURL = "https://api.github.com/"
+    let cache = NSCache<NSString, UIImage>()
+    private let baseURL = "https://api.github.com/"
     let perPage = 50
     
     private init() {}
@@ -64,6 +63,4 @@ class NetworkManager {
         
         task.resume()
     }
-    
-
 }
