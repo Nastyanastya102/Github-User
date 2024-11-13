@@ -32,6 +32,14 @@ class FollowersListVC: UIViewController {
                     self.hasMore = false
                 }
                 self.followers.append(contentsOf: flw)
+                if self.followers.isEmpty {
+                    let message = "No followers found for \(userName)"
+                    DispatchQueue.main.async {
+                        self.showEmptyView(with: message, in: self.view)
+                        return
+                    }
+                   
+                }
                 self.updateData()
 
                 break

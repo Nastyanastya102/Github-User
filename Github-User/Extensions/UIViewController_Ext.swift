@@ -9,7 +9,7 @@ fileprivate var containerView: UIView!
 import UIKit
 
 extension UIViewController {
-    func presentAlertOnMainTheread(title: String, message: String, buttonTitle: String) {
+    func presentGFAlertOnMainThred(title: String, message: String, buttonTitle: String) {
         let alert = GFAlertVC(title: title, body: message, buttonTitle: buttonTitle)
         alert.modalTransitionStyle = .crossDissolve
         alert.modalPresentationStyle = .overFullScreen
@@ -45,5 +45,11 @@ extension UIViewController {
             containerView?.removeFromSuperview()
             containerView = nil
         }
+    }
+    
+    func showEmptyView(with message: String, in view: UIView) {
+        let emptyView = GFEmptyState(message: message)
+        emptyView.frame = view.bounds
+        view.addSubview(emptyView)
     }
 }
