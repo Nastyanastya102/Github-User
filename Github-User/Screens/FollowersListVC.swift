@@ -22,9 +22,10 @@ class FollowersListVC: UIViewController {
     }
     
     func getFollowers(for userName: String, page: Int) {
+        showLoadingView()
         NetworkManager.shared.followers(for: userName, page: page) { [weak self] result in
             guard let self = self else { return }
-            
+            self.dismissLoadingViewHandler()
             switch(result) {
             case .success(let flw):
                 if followers.count > 50 {
