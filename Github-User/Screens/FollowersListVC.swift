@@ -9,16 +9,21 @@ class FollowersListVC: UIViewController {
     var hasMore: Bool = true
     var userName: String = ""
     var followers: [Follower] = []
+    var filteredFollowers: [Follower] = []
+
     let tableView = UITableView()
+    var searchController: UISearchController!
     var collectionView: UICollectionView! = nil
     var dataSource: UICollectionViewDiffableDataSource<Section, Follower>!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        definesPresentationContext = true
         configureViewController()
-        getFollowers(for: userName, page: page)
         configureCollectionView()
+        getFollowers(for: userName, page: page)
         configureDataSource()
+        configureSearchController()
     }
     
     func getFollowers(for userName: String, page: Int) {
@@ -40,7 +45,7 @@ class FollowersListVC: UIViewController {
                     }
                    
                 }
-                self.updateData()
+                self.updateData(followers: flw)
 
                 break
             case .failure(let error):
@@ -78,6 +83,13 @@ class FollowersListVC: UIViewController {
         view.addSubview(collectionView)
         collectionView.backgroundColor = .white
         collectionView.register(GFFollowerCell.self, forCellWithReuseIdentifier: GFFollowerCell.identifier)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
     
     func configureDataSource() {
@@ -88,13 +100,25 @@ class FollowersListVC: UIViewController {
         }
     }
     
-    func updateData() {
+    func updateData(followers: [Follower]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Follower>()
         snapshot.appendSections([.main])
         snapshot.appendItems(followers)
         DispatchQueue.main.async {
             self.dataSource.apply(snapshot, animatingDifferences: true)
         }
+    }
+    
+    func configureSearchController() {
+        searchController = UISearchController()
+
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.placeholder = "Search for a user"
+        navigationItem.searchController = searchController
+        navigationItem.searchController?.hidesNavigationBarDuringPresentation = false
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.delegate = self
+        searchController.isActive = true
     }
 }
 
@@ -111,6 +135,25 @@ extension FollowersListVC: UICollectionViewDelegate {
         }
     }
 }
+
+extension FollowersListVC: UISearchResultsUpdating {
+  func updateSearchResults(for searchController: UISearchController) {
+      guard let searchText = searchController.searchBar.text, !searchText.isEmpty else { return }
+        filterFollowers(by: searchText)
+    }
+    
+    func filterFollowers(by searchText: String) {
+        filteredFollowers = followers.filter {$0.login.lowercased().contains(searchText.lowercased())}
+        updateData(followers: filteredFollowers)
+    }
+}
+
+
+extension FollowersListVC: UISearchBarDelegate {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        updateData(followers: followers)
+    }}
+
 
 //OLD WAY
 //extension FollowersListVC: UITableViewDelegate, UITableViewDataSource {
