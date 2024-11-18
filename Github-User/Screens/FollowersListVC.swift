@@ -157,6 +157,8 @@ extension FollowersListVC: UISearchBarDelegate, UISearchResultsUpdating {
         let follower = isSearching ? filteredFollowers[indexPath.row] : followers[indexPath.row]
         
         let destinationVC = UserInfoVC()
+        destinationVC.username = follower.login
+        
         let navController = UINavigationController(rootViewController: destinationVC)
         present(navController, animated: true)
     }
