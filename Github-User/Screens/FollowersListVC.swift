@@ -10,6 +10,7 @@ class FollowersListVC: UIViewController {
     var userName: String = ""
     var followers: [Follower] = []
     var filteredFollowers: [Follower] = []
+    var isSearching = false
 
     let tableView = UITableView()
     var searchController: UISearchController!
@@ -136,23 +137,30 @@ extension FollowersListVC: UICollectionViewDelegate {
     }
 }
 
-extension FollowersListVC: UISearchResultsUpdating {
-  func updateSearchResults(for searchController: UISearchController) {
-      guard let searchText = searchController.searchBar.text, !searchText.isEmpty else { return }
+extension FollowersListVC: UISearchBarDelegate, UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchText = searchController.searchBar.text, !searchText.isEmpty else { return }
+        isSearching = true
         filterFollowers(by: searchText)
     }
-    
+      
     func filterFollowers(by searchText: String) {
         filteredFollowers = followers.filter {$0.login.lowercased().contains(searchText.lowercased())}
         updateData(followers: filteredFollowers)
     }
-}
-
-
-extension FollowersListVC: UISearchBarDelegate {
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        isSearching = false
         updateData(followers: followers)
-    }}
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let follower = isSearching ? filteredFollowers[indexPath.row] : followers[indexPath.row]
+        
+        let destinationVC = UserInfoVC()
+        let navController = UINavigationController(rootViewController: destinationVC)
+        present(navController, animated: true)
+    }
+}
 
 
 //OLD WAY
