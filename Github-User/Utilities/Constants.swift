@@ -10,5 +10,5 @@ enum SFSymbols {
     static let repos = "folder"
     static let gists = "list.bullet.rectangle"
     static let followers = "heart"
-    static let following = "person.2"
+    static let following = "person.crop.circle.fill"
 }

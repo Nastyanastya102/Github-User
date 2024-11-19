@@ -26,10 +26,13 @@ class UserInfoVC: UIViewController {
     func getUserInfo() {
         NetworkManager.shared.getUser(for: username, completed: { [weak self] result in
             guard let self = self else { return }
-            print(result)
             if case .success(let user) = result {
+               
                 DispatchQueue.main.async {
+                    
                     self.addChildVC(childVC: GFUserInfoHeaderVC(user: user), to: self.header)
+                    self.addChildVC(childVC: GFRepoItemVC(user: user), to: self.itemViewOne)
+                    self.addChildVC(childVC: GFFollowerItemVC(user: user), to: self.itemViewTwo)
                 }
             }
             if case .failure(let error) = result {

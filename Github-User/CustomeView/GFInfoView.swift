@@ -62,19 +62,19 @@ class GFInfoView: UIView {
         
         switch itemInfoType {
         case .followers:
-            symbolimageView.image = UIImage(named: SFSymbols.location)
+            symbolimageView.image = UIImage(systemName: SFSymbols.location)
             titleLabel.text = "Followers"
             break
         case .repos:
-            symbolimageView.image = UIImage(named: SFSymbols.repos)
+            symbolimageView.image = UIImage(systemName: SFSymbols.repos)
             titleLabel.text = "Public Repos"
             break
         case .gists:
-            symbolimageView.image = UIImage(named: SFSymbols.gists)
+            symbolimageView.image = UIImage(systemName: SFSymbols.gists)
             titleLabel.text = "Public Gists"
             break
         case .following:
-            symbolimageView.image = UIImage(named: SFSymbols.following)
+            symbolimageView.image = UIImage(systemName: SFSymbols.following)
             titleLabel.text = "Following"
             break
         }
