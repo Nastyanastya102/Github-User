@@ -13,6 +13,7 @@ class UserInfoVC: UIViewController {
     let header = UIView()
     let itemViewOne = UIView()
     let itemViewTwo = UIView()
+    let dateLabel = GFBodyLabel(textAlignment: .center)
     
     var itemView: [UIView] = []
 
@@ -33,6 +34,7 @@ class UserInfoVC: UIViewController {
                     self.addChildVC(childVC: GFUserInfoHeaderVC(user: user), to: self.header)
                     self.addChildVC(childVC: GFRepoItemVC(user: user), to: self.itemViewOne)
                     self.addChildVC(childVC: GFFollowerItemVC(user: user), to: self.itemViewTwo)
+                    self.dateLabel.text = user.createdAt.convertToDisplayString()
                 }
             }
             if case .failure(let error) = result {
@@ -55,7 +57,7 @@ class UserInfoVC: UIViewController {
     func layoutUI () {
         let padding: CGFloat = 20
         
-        itemView = [header, itemViewOne, itemViewTwo]
+        itemView = [header, itemViewOne, itemViewTwo, dateLabel]
         
         for item in itemView {
             view.addSubview(item)
@@ -77,6 +79,11 @@ class UserInfoVC: UIViewController {
             itemViewTwo.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
             itemViewTwo.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
             itemViewTwo.heightAnchor.constraint(equalToConstant: 140),
+            
+            dateLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
+            dateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
+            dateLabel.topAnchor.constraint(equalTo: itemViewTwo.bottomAnchor, constant: padding),
+            dateLabel.heightAnchor.constraint(equalToConstant: 18)
         ])
     }
     
