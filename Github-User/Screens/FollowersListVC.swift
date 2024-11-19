@@ -153,6 +153,7 @@ extension FollowersListVC: UISearchBarDelegate, UISearchResultsUpdating {
         isSearching = false
         updateData(followers: followers)
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let follower = isSearching ? filteredFollowers[indexPath.row] : followers[indexPath.row]
         
