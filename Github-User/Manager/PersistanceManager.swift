@@ -8,14 +8,14 @@
 import Foundation
 
 enum PersistanceActionType {
-    case save
+    case add
     case remove
 }
 
 enum PersistanceManager {
     static private let defaults = UserDefaults.standard
     enum Keys {
-        static let favorites = "faorites"
+        static let favorites = "favorites"
     }
     static func retrivewFavoriteUsers(complete: @escaping (Result<[Follower], NetworkError>) -> Void) {
         guard let favoriteUsers = defaults.object(forKey: Keys.favorites) as? Data else {
@@ -46,13 +46,16 @@ enum PersistanceManager {
     static func updateFavorire(favorite: Follower, action: PersistanceActionType, completed: @escaping (NetworkError?) -> Void) {
         retrivewFavoriteUsers { result in
             switch result {
-               case .success(let users):
+            case .success(let users):
                 var favorites = users
-                if !users.contains(favorite) {
-                    return completed(.dataError)
+                print(favorites)
+                print(favorites.contains(favorite))
+                guard !favorites.contains(favorite) else {
+                    completed(.dataError)
+                    return
                 }
-                action == .remove ? favorites.removeAll { $0.login == favorite.login } : favorites.append(favorite)
                 
+                action == .remove ? favorites.removeAll { $0.login == favorite.login } : favorites.append(favorite)
                 
                 completed(save(favorites))
             case .failure(let error):

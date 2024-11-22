@@ -10,10 +10,11 @@ import UIKit
 
 extension UIViewController {
     func presentGFAlertOnMainThred(title: String, message: String, buttonTitle: String) {
-        let alert = GFAlertVC(title: title, body: message, buttonTitle: buttonTitle)
-        alert.modalTransitionStyle = .crossDissolve
-        alert.modalPresentationStyle = .overFullScreen
         DispatchQueue.main.async {
+            let alert = GFAlertVC(title: title, body: message, buttonTitle: buttonTitle)
+            alert.modalTransitionStyle = .crossDissolve
+            alert.modalPresentationStyle = .overFullScreen
+
             self.present(alert, animated: true)
         }
     }

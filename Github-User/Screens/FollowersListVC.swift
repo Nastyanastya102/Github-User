@@ -80,7 +80,26 @@ class FollowersListVC: UIViewController {
     }
     
     @objc func addButtonTapped() {
-        
+        NetworkManager.shared.getUser(for: userName, completed: { [weak self] result in
+            guard let self else { return }
+            self.dismissLoadingViewHandler()
+            if case .success(let user) = result {
+
+                let favorite  = Follower(login: user.login, avatarUrl: user.avatarUrl)
+                PersistanceManager.updateFavorire(favorite: favorite, action: PersistanceActionType.add) { [weak self] error in guard let self else { return }
+     
+                    guard error == nil else {
+                        self.presentGFAlertOnMainThred(title: "Error", message: error?.localizedDescription ?? "An error occurred, please try again", buttonTitle: "OK")
+                        return
+                    }
+                    self.presentGFAlertOnMainThred(title: "Success 💘", message: "Successfully added favorite", buttonTitle: "OK")
+                }
+            }
+            if case .failure(let error) = result {
+                self.presentGFAlertOnMainThred(title: "Error", message: error.localizedDescription, buttonTitle: "OK")
+            }
+          
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
