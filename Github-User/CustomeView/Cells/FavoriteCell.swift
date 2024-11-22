@@ -40,11 +40,10 @@ class FavoriteCell: UITableViewCell {
             avatar.heightAnchor.constraint(equalToConstant: 60),
             avatar.widthAnchor.constraint(equalToConstant: 60),
             
-            nameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
+            nameLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             nameLabel.leadingAnchor.constraint(equalTo: avatar.trailingAnchor, constant: 24),
             nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
             nameLabel.heightAnchor.constraint(equalToConstant: 40),
-            
         ])
         
     }
