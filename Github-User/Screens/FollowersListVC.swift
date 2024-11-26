@@ -141,14 +141,10 @@ class FollowersListVC: UIViewController {
     
     func configureSearchController() {
         searchController = UISearchController()
-
         searchController.searchResultsUpdater = self
         searchController.searchBar.placeholder = "Search for a user"
         navigationItem.searchController = searchController
-//        navigationItem.searchController?.hidesNavigationBarDuringPresentation = false
-//        searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
-//        searchController.isActive = true
     }
 }
 
@@ -168,7 +164,10 @@ extension FollowersListVC: UICollectionViewDelegate {
 
 extension FollowersListVC: UISearchBarDelegate, UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        guard let searchText = searchController.searchBar.text, !searchText.isEmpty else { return }
+        guard let searchText = searchController.searchBar.text, !searchText.isEmpty else {
+            updateData(followers: followers)
+            return
+        }
         isSearching = true
         filterFollowers(by: searchText)
     }
