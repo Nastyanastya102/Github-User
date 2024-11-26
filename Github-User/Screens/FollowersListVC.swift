@@ -145,10 +145,10 @@ class FollowersListVC: UIViewController {
         searchController.searchResultsUpdater = self
         searchController.searchBar.placeholder = "Search for a user"
         navigationItem.searchController = searchController
-        navigationItem.searchController?.hidesNavigationBarDuringPresentation = false
-        searchController.obscuresBackgroundDuringPresentation = false
+//        navigationItem.searchController?.hidesNavigationBarDuringPresentation = false
+//        searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
-        searchController.isActive = true
+//        searchController.isActive = true
     }
 }
 
