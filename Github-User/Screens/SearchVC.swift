@@ -19,6 +19,7 @@ class SearchVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Why here it's view and in button and text field it's layer?
+      
         view.backgroundColor = .systemBackground
         configureLogoImageView()
         configureTextField()
@@ -29,6 +30,7 @@ class SearchVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
+        userNameTextFileld.text = ""
     }
     
     func configureLogoImageView () {
@@ -80,6 +82,7 @@ class SearchVC: UIViewController {
             presentGFAlertOnMainThred(title: "Empty username 🥲", message: "Please enter a username to search for", buttonTitle: "Ok")
             return
         }
+        userNameTextFileld.resignFirstResponder()
         let followerListVC = FollowersListVC()
         followerListVC.userName = userNameTextFileld.text!
         followerListVC.title = userNameTextFileld.text
