@@ -20,6 +20,8 @@ This project is a **GitHub User Finder** application, built using **Swift**. It 
 <img src="https://github.com/user-attachments/assets/05b50cc3-1b69-479a-8f32-9bcae60522b6" width="400" height="auto">
 <img src="https://github.com/user-attachments/assets/0f1ee564-f6da-47d6-b98d-7332984667a2" width="400" height="auto">
 <img src="https://github.com/user-attachments/assets/cb96a16d-8366-4809-8461-eb63f99837b6" width="400" height="auto">
+<img src="https://github.com/user-attachments/assets/ac56db6d-eda8-47d7-a78a-66b225144d4f" width="400" height="auto">
+
 
 ## Requirements
 
