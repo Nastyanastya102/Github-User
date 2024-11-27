@@ -15,7 +15,8 @@ class FollowersListVC: UIViewController {
     var followers: [Follower] = []
     var filteredFollowers: [Follower] = []
     var isSearching = false
-
+    private var isLoading: Bool = false
+    
     let tableView = UITableView()
     var searchController: UISearchController!
     var collectionView: UICollectionView! = nil
@@ -32,6 +33,7 @@ class FollowersListVC: UIViewController {
     }
     
     func getFollowers(for userName: String, page: Int) {
+        isLoading = true
         showLoadingView()
         NetworkManager.shared.followers(for: userName, page: page) { [weak self] result in
             guard let self = self else { return }
@@ -69,6 +71,7 @@ class FollowersListVC: UIViewController {
                     presentGFAlertOnMainThred(title: "Unable to parse data", message: "Please check your internet connection", buttonTitle: "OK")
                 }
             }
+            self.isLoading = false
         }
     }
     
@@ -155,7 +158,7 @@ extension FollowersListVC: UICollectionViewDelegate {
         let height = scrollView.frame.size.height
 
         if offsetY > contentHeight - height {
-            guard hasMore else { return }
+            guard hasMore, !isLoading else { return }
             page += 1
             getFollowers(for: userName, page: page)
         }
@@ -202,6 +205,7 @@ extension FollowersListVC: FollowersListVCDelegate {
         filteredFollowers.removeAll()
         page = 1
         collectionView.setContentOffset(.zero, animated: true)
+        collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
         getFollowers(for: username, page: page)
     }
 }
