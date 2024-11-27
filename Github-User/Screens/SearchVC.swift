@@ -25,6 +25,7 @@ class SearchVC: UIViewController {
         configureTextField()
         configureButton()
         createDismissTapGesture()
+        view.addSubviews(logoImageView, userNameTextFileld, searchButton)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,7 +38,6 @@ class SearchVC: UIViewController {
         logoImageView.image = UIImage(named: "gh-logo")
         logoImageView.contentMode = .scaleAspectFit
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(logoImageView)
         
         NSLayoutConstraint.activate([
             logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 80),
@@ -48,7 +48,6 @@ class SearchVC: UIViewController {
     }
     
     func configureTextField() {
-        view.addSubview(userNameTextFileld)
         userNameTextFileld.delegate = self
         
         NSLayoutConstraint.activate([
@@ -60,7 +59,6 @@ class SearchVC: UIViewController {
     }
     
     func configureButton() {
-        view.addSubview(searchButton)
         searchButton.addTarget(self, action: #selector(pushFollowerList), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
