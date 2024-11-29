@@ -80,14 +80,15 @@ extension FavoritesVC: UITableViewDataSource, UITableViewDelegate {
         guard editingStyle == .delete else { return }
         
         let favoriteUser = favoriteUsers[indexPath.row]
-        favoriteUsers.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .fade)
+    
         PersistanceManager.updateFavorire(favorite: favoriteUser, action: .remove) { [weak self] error in
             guard let self else { return }
             guard let error else {
                 self.presentGFAlertOnMainThred(title: "Error", message: error?.localizedDescription ?? "Something went wrong", buttonTitle: "OK")
                 return
             }
+            favoriteUsers.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
             self.presentGFAlertOnMainThred(title: "Success ✨", message: "Favorite user removed", buttonTitle: "OK")
         }
     }
