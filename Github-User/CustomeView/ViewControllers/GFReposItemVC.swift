@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol UserInfoVCDelegate: AnyObject {
+    func didTapGithubProfiles(user: User)
+    func didTapGetFollowers(user: User)
+}
+
 class GFRepoItemVC: GFItemInfoVC {
     override func viewDidLoad() {
         super.viewDidLoad()

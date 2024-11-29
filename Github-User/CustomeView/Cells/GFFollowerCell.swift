@@ -29,9 +29,8 @@ class GFFollowerCell: UICollectionViewCell {
     }
     
     private func setupSubviews() {
-        contentView.addSubview(avatar)
-        contentView.addSubview(nameLabel)
-        
+        contentView.addSubviews(avatar, nameLabel)
+
         let padding: CGFloat = 8
         
         NSLayoutConstraint.activate([

@@ -8,10 +8,6 @@
 import UIKit
 import SafariServices
 
-protocol UserInfoVCDelegate: AnyObject {
-    func didTapGithubProfiles(user: User)
-    func didTapGetFollowers(user: User)
-}
 
 class UserInfoVC: UIViewController {
     weak var delegate: FollowersListVCDelegate!
@@ -68,7 +64,7 @@ class UserInfoVC: UIViewController {
             header.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             header.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             header.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            header.heightAnchor.constraint(equalToConstant: 180),
+            header.heightAnchor.constraint(equalToConstant: 210),
             
             itemViewOne.topAnchor.constraint(equalTo: header.bottomAnchor, constant: padding),
             itemViewOne.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
@@ -83,7 +79,7 @@ class UserInfoVC: UIViewController {
             dateLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
             dateLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
             dateLabel.topAnchor.constraint(equalTo: itemViewTwo.bottomAnchor, constant: padding),
-            dateLabel.heightAnchor.constraint(equalToConstant: 18)
+            dateLabel.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     

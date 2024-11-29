@@ -29,9 +29,8 @@ class FavoriteCell: UITableViewCell {
     
     private func configure() {
         let padding: CGFloat = 12
-        addSubview(avatar)
-        addSubview(nameLabel)
-        
+        addSubviews(avatar, nameLabel)
+
         accessoryType = .disclosureIndicator
         
         NSLayoutConstraint.activate([

@@ -26,6 +26,7 @@ class GFBodyLabel: UILabel {
     
     private func configure() {
         font = UIFont.preferredFont(forTextStyle: .body)
+        adjustsFontForContentSizeCategory = true
         textColor = .gray
         translatesAutoresizingMaskIntoConstraints = false
         adjustsFontSizeToFitWidth = true
