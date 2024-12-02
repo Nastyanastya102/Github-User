@@ -12,6 +12,29 @@ class SearchVC: UIViewController {
     let userNameTextFileld = GFTextField()
     let searchButton = GFButton(backgroundColor: .systemGreen, title: "Get followers")
     let activityIndicator = UIActivityIndicatorView()
+    private let line: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(named: "line")
+        return imageView
+    }()
+
+    private let descText: GFBodyLabel = {
+        let label = GFBodyLabel()
+        label.text = "Github Users App"
+        label.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        return label
+    }()
+    
+    let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.alignment = .center
+        stackView.distribution = .fill
+        stackView.spacing = 10
+        return stackView
+    }()
     
     
     var isUserNameEntered: Bool {return !userNameTextFileld.text!.isEmpty}
@@ -21,17 +44,39 @@ class SearchVC: UIViewController {
         // Why here it's view and in button and text field it's layer?
       
         view.backgroundColor = .systemBackground
-        configureLogoImageView()
-        configureTextField()
-        configureButton()
-        createDismissTapGesture()
-        view.addSubviews(logoImageView, userNameTextFileld, searchButton)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
         userNameTextFileld.text = ""
+        view.addSubview(logoImageView)
+        stackView.addArrangedSubview(line)
+        stackView.addArrangedSubview(descText)
+        view.addSubview(stackView)
+        
+        configureLogoImageView()
+        configureTextField()
+        configureButton()
+        createDismissTapGesture()
+        configureDescription()
+    }
+    
+    func configureDescription() {
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: userNameTextFileld.bottomAnchor, constant: 80),
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            stackView.heightAnchor.constraint(equalToConstant: 100),
+        ])
+        
+        NSLayoutConstraint.activate([
+               line.widthAnchor.constraint(equalToConstant: 50), // Example constraint
+               line.heightAnchor.constraint(equalToConstant: 50) // Example constraint
+           ])
     }
     
     func configureLogoImageView () {
@@ -48,6 +93,7 @@ class SearchVC: UIViewController {
     }
     
     func configureTextField() {
+        view.addSubview(userNameTextFileld)
         userNameTextFileld.delegate = self
         
         NSLayoutConstraint.activate([
@@ -59,6 +105,7 @@ class SearchVC: UIViewController {
     }
     
     func configureButton() {
+        view.addSubview(searchButton)
         searchButton.addTarget(self, action: #selector(pushFollowerList), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
